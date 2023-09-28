@@ -61,6 +61,21 @@ class StaticticsTableViewCell: UITableViewCell {
         addSubview(statisticsNameLabel)
         addSubview(backgroundBlackLine)
     }
+    
+    func configure(differenceModel: DifferenceWorkout) {
+        statisticsNameLabel.text = differenceModel.name
+        beforeLabel.text = "Before: \(differenceModel.firstReps)"
+        nowLabel.text = "Now: \(differenceModel.lastReps)"
+        
+        let difference = differenceModel.lastReps - differenceModel.firstReps
+        progressLabel.text = "\(difference)"
+        
+        switch difference {
+        case ..<0: progressLabel.textColor = .specialGreen
+        case 1...: progressLabel.textColor = .specialDarkYellow
+        default: progressLabel.textColor = .specialGray
+        }
+    }
 }
 
 //MARK: - Set Constraints
