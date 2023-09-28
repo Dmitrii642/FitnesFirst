@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol WorkoutCellProtocol: AnyObject {
+    func startButtonTapped(model: WorkoutModel) 
+}
+
 class WorkoutTableViewCell: UITableViewCell {
+    
+    weak var workoutCellDelegate: WorkoutCellProtocol?
 
     static let idTableViewCell = "idTableViewCell"
     
@@ -38,7 +44,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private let workoutNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Pull Ups"
+//        label.text = "Pull Ups"
         label.textColor = .specialBlack
         label.font = .robotoMedium22()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +53,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private let workoutRepsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Reps: 10"
+//        label.text = "Reps: 10"
         label.textColor = .specialGray
         label.font = .robotoMedium16()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +62,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private let workoutSetsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sets: 2"
+//        label.text = "Sets: 2"
         label.textColor = .specialGray
         label.font = .robotoMedium16()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -67,16 +73,18 @@ class WorkoutTableViewCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 10
         button.addShadowOnView()
-        button.backgroundColor = .specialYellow
+//        button.backgroundColor = .specialYellow
         button.titleLabel?.font = .robotoBold16()
-        button.setTitle("Start", for: .normal)
-        button.tintColor = .specialDarkGreen
+//        button.setTitle("Start", for: .normal)
+//        button.tintColor = .specialDarkGreen
         button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private var labelsStackView = UIStackView()
+    
+    private var workoutModel = WorkoutModel()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -109,9 +117,40 @@ class WorkoutTableViewCell: UITableViewCell {
     }
     
     @objc private func startButtonTapped() {
-        print("Start")
+        workoutCellDelegate?.startButtonTapped(model: workoutModel)
     }
     
+    func configure(model: WorkoutModel) {
+        workoutModel = model
+        
+        workoutNameLabel.text = model.workoutName
+        
+        if model.workoutTimer == 0 {
+            workoutRepsLabel.text = "Reps: \(model.workoutReps)"
+        } else {
+            workoutRepsLabel.text = "Timer: \(model.workoutTimer.getTimeSeconds())"
+        }
+        
+        workoutSetsLabel.text = "Sets: \(model.workoutSets)"
+        
+        if model.workoutStatus {
+            startButton.setTitle("COMPLETE", for: .normal)
+            startButton.tintColor = .white
+            startButton.backgroundColor = .specialDarkGreen
+            startButton.isEnabled = false
+        } else {
+            startButton.setTitle("START", for: .normal)
+            startButton.tintColor = .specialDarkGreen
+            startButton.backgroundColor = .specialYellow
+            startButton.isEnabled = true
+        }
+        
+        guard let imageData = model.workoutImage,
+                let image = UIImage(data: imageData) else {
+            return
+        }
+        workoutImageView.image = image.withRenderingMode(.alwaysTemplate)
+    }
     
 }
 
