@@ -46,6 +46,8 @@
 		66A0222E2ABC987B002E854A /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A0222D2ABC987B002E854A /* RealmManager.swift */; };
 		66A739112AC4841000A04304 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739102AC4841000A04304 /* UIStackView + Extensions.swift */; };
 		66A739142AC5C8B900A04304 /* DifferenceWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739132AC5C8B900A04304 /* DifferenceWorkout.swift */; };
+		66A7391A2ACAF97300A04304 /* RepsWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */; };
+		66A7391C2ACAF99400A04304 /* WorkoutParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		66A0222D2ABC987B002E854A /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		66A739102AC4841000A04304 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
 		66A739132AC5C8B900A04304 /* DifferenceWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifferenceWorkout.swift; sourceTree = "<group>"; };
+		66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepsWorkoutViewController.swift; sourceTree = "<group>"; };
+		66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutParametersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				66A022092AB8AB05002E854A /* NavigationModule */,
 				6604229B2AAE0D1500FA3082 /* MainModule */,
 				66A0220C2AB9C155002E854A /* NewWorkoutModule */,
+				66A739152ACAF80B00A04304 /* RepsWorkoutModule */,
+				66A739162ACAF82300A04304 /* TimerWorkoutModule */,
 				66A0222C2ABC9858002E854A /* Service */,
 				66A021FA2AB72902002E854A /* StatisticModule */,
 				660422A32AB0A20800FA3082 /* Extensions */,
@@ -348,6 +354,38 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		66A739152ACAF80B00A04304 /* RepsWorkoutModule */ = {
+			isa = PBXGroup;
+			children = (
+				66A739172ACAF84100A04304 /* Views */,
+				66A739182ACAF84A00A04304 /* Controllers */,
+			);
+			path = RepsWorkoutModule;
+			sourceTree = "<group>";
+		};
+		66A739162ACAF82300A04304 /* TimerWorkoutModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TimerWorkoutModule;
+			sourceTree = "<group>";
+		};
+		66A739172ACAF84100A04304 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		66A739182ACAF84A00A04304 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -429,10 +467,12 @@
 				66A022032AB74770002E854A /* StatisticsTableView.swift in Sources */,
 				66A022292ABC8A54002E854A /* WorkoutModel.swift in Sources */,
 				66A022202ABB3F91002E854A /* RepsOrTimerView.swift in Sources */,
+				66A7391A2ACAF97300A04304 /* RepsWorkoutViewController.swift in Sources */,
 				66A0222B2ABC9351002E854A /* Date + Extensions.swift in Sources */,
 				66A022192ABB17C6002E854A /* DateAndRepeatView.swift in Sources */,
 				660422A22AAF514A00FA3082 /* WeatherView.swift in Sources */,
 				66A022152AB9D221002E854A /* NameView.swift in Sources */,
+				66A7391C2ACAF99400A04304 /* WorkoutParametersView.swift in Sources */,
 				66514E692AC07BAC00C3E7F9 /* UIViewController + Extensions.swift in Sources */,
 				66A0221E2ABB3B13002E854A /* SliderView.swift in Sources */,
 				66A0220B2AB8AB39002E854A /* MainTabBarController.swift in Sources */,
