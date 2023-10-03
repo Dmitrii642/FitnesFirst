@@ -30,4 +30,17 @@ class RealmManager {
             realm.delete(model)
         }
     }
+    
+    func updateSetsRepsWorkoutModel(model: WorkoutModel, sets: Int, reps: Int) {
+        try! realm.write {
+            model.workoutSets = sets
+            model.workoutReps = reps
+        }
+    }
+    
+    func updateStatusWorkoutModel(_ model: WorkoutModel) {
+        try! realm.write {
+            model.workoutStatus = true
+        }
+    }
 }

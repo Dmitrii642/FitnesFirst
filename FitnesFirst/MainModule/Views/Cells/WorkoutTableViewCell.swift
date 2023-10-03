@@ -71,8 +71,8 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
-        button.layer.cornerRadius = 10
         button.addShadowOnView()
+        button.layer.cornerRadius = 10
 //        button.backgroundColor = .specialYellow
         button.titleLabel?.font = .robotoBold16()
 //        button.setTitle("Start", for: .normal)
