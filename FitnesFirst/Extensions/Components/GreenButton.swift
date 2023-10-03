@@ -12,8 +12,6 @@ class GreenButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configure()
     }
     
     
@@ -24,6 +22,8 @@ class GreenButton: UIButton {
     convenience init(text: String){
         self.init(type: .system)
         setTitle(text, for: .normal)
+        
+        configure()
     }
     
     private func configure() {
