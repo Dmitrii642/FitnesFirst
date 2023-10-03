@@ -26,9 +26,9 @@ class RepsWorkoutViewController: UIViewController {
     private let workoutParametersView = WorkoutParametersView()
     private lazy var finishButton = GreenButton(text: "FINISH")
     
-//    private var workoutModel = WorkoutModel()
-//    private let customAlert = CustomAlert()
-//    private var numberOfSet = 1
+    private var workoutModel = WorkoutModel()
+    private let customAlert = CustomAlert()
+    private var numberOfSet = 1
     
     override func viewDidLayoutSubviews() {
         closeButton.layer.cornerRadius = closeButton.frame.height / 2
@@ -49,16 +49,64 @@ class RepsWorkoutViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(sportmanImageView)
         view.addSubview(detailsLabel)
+        workoutParametersView.cellNextSetDelegate = self
+        workoutParametersView.refreshLabel(model: workoutModel, numberOfSet: numberOfSet)
         view.addSubview(workoutParametersView)
         view.addSubview(finishButton)
-//        finishButton.addTarget(self, action: #selector(finishButtonTapped), for: .touchUpInside)
+        finishButton.addTarget(self, action: #selector(finishButtonTapped), for: .touchUpInside)
     }
     
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
+    @objc private func finishButtonTapped() {
+        
+        if numberOfSet == workoutModel.workoutSets {
+            RealmManager.shared.updateStatusWorkoutModel(workoutModel)
+            dismiss(animated: true)
+        } else {
+            presentAlertWithAction(title: "Warning", message: "You haven't finished your workout") {
+                self.dismiss(animated: true)
+            }
+        }
+    }
+    
+    
+    func setWorkoutModel(_ model: WorkoutModel) {
+        workoutModel = model
+    }
 }
+
+//MARK: - NextSetProtocol
+extension RepsWorkoutViewController: NextSetProtocol {
+    func nextSetTapped() {
+        if numberOfSet < workoutModel.workoutSets {
+            numberOfSet += 1
+            workoutParametersView.refreshLabel(model: workoutModel, numberOfSet: numberOfSet)
+        } else {
+            presentSimpleAlert(title: "Error", message: "Finish your workout")
+        }
+    }
+    
+    func editingTapped() {
+        customAlert.presentCustomAlert(viewController: self,
+                                       repsOrTimer: "Reps") { [weak self] sets, reps in
+            guard let self else { return }
+            
+            if sets != "" && reps != "" {
+                guard let numberOfSets = Int(sets),
+                      let numberOfReps = Int(reps) else { return }
+                RealmManager.shared.updateSetsRepsWorkoutModel(model: self.workoutModel,
+                                                               sets: numberOfSets,
+                                                               reps: numberOfReps)
+                
+                self.workoutParametersView.refreshLabel(model: self.workoutModel, numberOfSet: self.numberOfSet)
+            }
+        }
+    }
+}
+
 
 //MARK: - Set Constraints
 extension RepsWorkoutViewController {

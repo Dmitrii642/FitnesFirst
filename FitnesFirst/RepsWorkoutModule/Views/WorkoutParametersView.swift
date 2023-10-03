@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol NextSetProtocol: AnyObject {
+    func nextSetTapped()
+    func editingTapped()
+}
+
 class WorkoutParametersView: UIView {
+    
+    weak var cellNextSetDelegate: NextSetProtocol?
     
     private let workoutNameLabel = UILabel(text: "Name",
                                            font: .robotoMedium24(),
@@ -44,7 +51,7 @@ class WorkoutParametersView: UIView {
     }()
     
     private lazy var editingButton: UIButton = {
-       let button = UIButton()
+       let button = UIButton(type: .system)
         button.setImage(UIImage(named: "editing")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("Editing", for: .normal)
         button.tintColor = .specialLightBrown
@@ -55,7 +62,7 @@ class WorkoutParametersView: UIView {
     }()
     
     private lazy var nextSetsButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = .specialYellow
         button.layer.cornerRadius = 10
         button.setTitle("NEXT", for: .normal)
@@ -102,15 +109,18 @@ class WorkoutParametersView: UIView {
     }
     
     @objc private func editingButtonTapped() {
-//        cellNextSetDelegate?.editingTapped()
-        print("editing")
+        cellNextSetDelegate?.editingTapped()
     }
     
     @objc private func nextSetsButtonTapped() {
-//        cellNextSetDelegate?.nextSetTapped()
-        print("next")
+        cellNextSetDelegate?.nextSetTapped()
     }
     
+    func refreshLabel(model: WorkoutModel, numberOfSet: Int) {
+        workoutNameLabel.text = model.workoutName
+        numberOfSetsLabel.text = "\(numberOfSet)/\(model.workoutSets)"
+        numberOfRepsLabel.text = "\(model.workoutReps)"
+    }
     
 }
 

@@ -48,6 +48,7 @@
 		66A739142AC5C8B900A04304 /* DifferenceWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739132AC5C8B900A04304 /* DifferenceWorkout.swift */; };
 		66A7391A2ACAF97300A04304 /* RepsWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */; };
 		66A7391C2ACAF99400A04304 /* WorkoutParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */; };
+		66A7391E2ACB156600A04304 /* customAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7391D2ACB156600A04304 /* customAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		66A739132AC5C8B900A04304 /* DifferenceWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifferenceWorkout.swift; sourceTree = "<group>"; };
 		66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepsWorkoutViewController.swift; sourceTree = "<group>"; };
 		66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutParametersView.swift; sourceTree = "<group>"; };
+		66A7391D2ACB156600A04304 /* customAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 				66A022162AB9D363002E854A /* BrownTextField.swift */,
 				66A0221A2ABB3A16002E854A /* GreenSlider.swift */,
 				66A022212ABB44BE002E854A /* GreenButton.swift */,
+				66A7391D2ACB156600A04304 /* customAlert.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				66A022012AB73DEC002E854A /* StaticticsTableViewCell.swift in Sources */,
 				66A022272ABC8214002E854A /* Int + Extensions.swift in Sources */,
 				66A021F72AB35B6B002E854A /* WorkoutTableViewCell.swift in Sources */,
+				66A7391E2ACB156600A04304 /* customAlert.swift in Sources */,
 				66A022172AB9D363002E854A /* BrownTextField.swift in Sources */,
 				66A0222E2ABC987B002E854A /* RealmManager.swift in Sources */,
 				66A021EC2AB0BBA5002E854A /* UIFont + Extensions.swift in Sources */,
