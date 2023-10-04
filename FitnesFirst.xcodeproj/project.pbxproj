@@ -49,6 +49,8 @@
 		66A7391A2ACAF97300A04304 /* RepsWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */; };
 		66A7391C2ACAF99400A04304 /* WorkoutParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */; };
 		66A7391E2ACB156600A04304 /* customAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A7391D2ACB156600A04304 /* customAlert.swift */; };
+		66A739242ACD9C2600A04304 /* TimerWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739232ACD9C2600A04304 /* TimerWorkoutViewController.swift */; };
+		66A739262ACD9C4D00A04304 /* TimerWorkoutParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A739252ACD9C4D00A04304 /* TimerWorkoutParametersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepsWorkoutViewController.swift; sourceTree = "<group>"; };
 		66A7391B2ACAF99400A04304 /* WorkoutParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutParametersView.swift; sourceTree = "<group>"; };
 		66A7391D2ACB156600A04304 /* customAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customAlert.swift; sourceTree = "<group>"; };
+		66A739232ACD9C2600A04304 /* TimerWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerWorkoutViewController.swift; sourceTree = "<group>"; };
+		66A739252ACD9C4D00A04304 /* TimerWorkoutParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerWorkoutParametersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +373,8 @@
 		66A739162ACAF82300A04304 /* TimerWorkoutModule */ = {
 			isa = PBXGroup;
 			children = (
+				66A739222ACD9C0300A04304 /* Views */,
+				66A739212ACD9BFB00A04304 /* Controllers */,
 			);
 			path = TimerWorkoutModule;
 			sourceTree = "<group>";
@@ -387,6 +393,22 @@
 				66A739192ACAF97300A04304 /* RepsWorkoutViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		66A739212ACD9BFB00A04304 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				66A739232ACD9C2600A04304 /* TimerWorkoutViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		66A739222ACD9C0300A04304 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66A739252ACD9C4D00A04304 /* TimerWorkoutParametersView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,6 +505,7 @@
 				66A022252ABB4B5E002E854A /* SliderType.swift in Sources */,
 				6604228A2AACA28F00FA3082 /* MainViewController.swift in Sources */,
 				66A022102AB9C1A8002E854A /* NewWorkoutViewController.swift in Sources */,
+				66A739242ACD9C2600A04304 /* TimerWorkoutViewController.swift in Sources */,
 				66A0221B2ABB3A16002E854A /* GreenSlider.swift in Sources */,
 				66A021FF2AB7298D002E854A /* StatisticViewController.swift in Sources */,
 				660422862AACA28F00FA3082 /* AppDelegate.swift in Sources */,
@@ -495,6 +518,7 @@
 				66A739112AC4841000A04304 /* UIStackView + Extensions.swift in Sources */,
 				66A022012AB73DEC002E854A /* StaticticsTableViewCell.swift in Sources */,
 				66A022272ABC8214002E854A /* Int + Extensions.swift in Sources */,
+				66A739262ACD9C4D00A04304 /* TimerWorkoutParametersView.swift in Sources */,
 				66A021F72AB35B6B002E854A /* WorkoutTableViewCell.swift in Sources */,
 				66A7391E2ACB156600A04304 /* customAlert.swift in Sources */,
 				66A022172AB9D363002E854A /* BrownTextField.swift in Sources */,
