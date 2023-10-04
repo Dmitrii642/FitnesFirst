@@ -41,7 +41,14 @@ class StatisticViewController: UIViewController {
     private let exerciesLabel = UILabel(text: "Exercises")
     private let tableView = StatisticsTableView()
     
-    
+    private var differenceArray = [DifferenceWorkout]()
+   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        segmentedChange()
+    }
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +67,49 @@ class StatisticViewController: UIViewController {
     
     @objc private func segmentedChange() {
         print(segmentedControl.selectedSegmentIndex)
+        let dateToday = Date()
+        differenceArray = [DifferenceWorkout]()
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            let dateStart = dateToday.offsetDay(days: 7)
+            getDifferenceModel(dateStrat: dateStart)
+        } else {
+            let dateStart = dateToday.offsetMonth(month: 1)
+            getDifferenceModel(dateStrat: dateStart)
+        }
+        tableView.setDifferenceArray(differenceArray)
+        tableView.reloadData()
+    }
+    
+    private func getWorkoutName() -> [String] {
+        var nameArray = [String]()
+        
+        let allWorkouts = RealmManager.shared.getResultWorkoutModel()
+        
+        for workoutModel in allWorkouts {
+            if !nameArray.contains(workoutModel.workoutName) {
+                nameArray.append(workoutModel.workoutName)
+            }
+        }
+        return nameArray
+    }
+    
+    private func getDifferenceModel(dateStrat: Date) {
+        let dateEnd = Date()
+        let nameArray = getWorkoutName()
+        let allWorkouts = RealmManager.shared.getResultWorkoutModel()
+        
+        for name in nameArray {
+            let predicate = NSPredicate(format: "workoutName = '\(name)' AND workoutDate BETWEEN %@", [dateStrat, dateEnd])
+            let filtredArray = allWorkouts.filter(predicate).sorted(byKeyPath: "workoutDate").map { $0 }
+            
+            guard let last = filtredArray.last?.workoutReps,
+                  let first = filtredArray.first?.workoutReps else {
+                return
+            }
+            let differenceWorkout = DifferenceWorkout(name: name, lastReps: last, firstReps: first)
+            differenceArray.append(differenceWorkout)
+        }
     }
 }
     

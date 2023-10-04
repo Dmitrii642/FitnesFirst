@@ -47,18 +47,30 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    private let noWorkoutImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "noWorkout")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    
     private let calendarView = CalendarView()
     private let weatherView = WeatherView()
     private let workoutTodayLabel = UILabel(text: "Workout today")
     private let tableView = MainTableView()
 
-    
-    
+    private var workoutArray = [WorkoutModel]()
     
     override func viewDidLayoutSubviews() {
         userPhotoImageView.layer.cornerRadius = userPhotoImageView.frame.width / 2
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selectItem(date: Date())
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +89,9 @@ class MainViewController: UIViewController {
         view.addSubview(addWorkoutButton)
         view.addSubview(weatherView)
         view.addSubview(workoutTodayLabel)
+        tableView.mainDelegate = self
         view.addSubview(tableView)
+        view.addSubview(noWorkoutImageView)
     }
     
     @objc private func addWorkoutButtonTapped() {
@@ -85,16 +99,73 @@ class MainViewController: UIViewController {
         newWorkoutViewController.modalPresentationStyle = .fullScreen
         present(newWorkoutViewController, animated: true)
     }
+    
+    private func getWorkouts(date: Date) {
+        let weekday = date.getWeekdayNumber()
+        let startDate = date.startEndDate().start
+        let endDate = date.startEndDate().end
+        
+        let predicateRepeat = NSPredicate(format: "workoutNumberOfDay = \(weekday) AND workoutRepeat = true")
+        let predicateUnrepeat = NSPredicate(format: "workoutRepeat = false AND workoutDate BETWEEN %@", [startDate, endDate])
+        let compound = NSCompoundPredicate(type: .or, subpredicates: [predicateRepeat, predicateUnrepeat ])
+        
+        let resultArray = RealmManager.shared.getResultWorkoutModel()
+        let filtredArray = resultArray.filter(compound).sorted(byKeyPath: "workoutName")
+        workoutArray = filtredArray.map { $0 }
+    }
+    
+    private func checkWorkoutToday() {
+        noWorkoutImageView.isHidden = !workoutArray.isEmpty
+        tableView.isHidden = workoutArray.isEmpty
+    }
 }
 
 //MARK: - CalendarViewProtocol
 extension MainViewController: CalendarViewProtocol {
     func selectItem(date: Date) {
-        print(date)
+        getWorkouts(date: date)
+        tableView.setWorkoutsArray(workoutArray)
+        tableView.reloadData()
+        checkWorkoutToday()
     }
-    
-
 }
+
+//MARK: - MainTableViewProtocol
+
+extension MainViewController: MainTableViewProtocol {
+    func deleteWorkout(model: WorkoutModel, index: Int) {
+        RealmManager.shared.deleteWorkoutModel(model)
+        workoutArray.remove(at: index)
+        tableView.setWorkoutsArray(workoutArray)
+        tableView.reloadData()
+        checkWorkoutToday()
+    }
+}
+
+//MARK: - WorkoutCellProtocol
+extension MainViewController: WorkoutCellProtocol {
+    func startButtonTapped(model: WorkoutModel) {
+        if model.workoutTimer == 0 {
+            let repsWorkoutViewController = RepsWorkoutViewController()
+            repsWorkoutViewController.modalPresentationStyle = .fullScreen
+            repsWorkoutViewController.setWorkoutModel(model)
+            present(repsWorkoutViewController, animated: true)
+        } else {
+        print("timer")
+//            let timerWorkoutViewController = TimerWorkoutViewController()
+//            timerWorkoutViewController.modalPresentationStyle = .fullScreen
+//            timerWorkoutViewController.setWorkoutModel(model)
+//            present(timerWorkoutViewController, animated: true)
+        }
+    }
+}
+
+////MARK: - WorkoutCellProtocol
+//extension MainViewController: WorkoutCellProtocol {
+//    func startButtonTapped(model: WorkoutModel) {
+//        print(model)
+//    }
+//}
 
 //MARK: - Set Constraints
 extension MainViewController {
@@ -134,7 +205,12 @@ extension MainViewController {
             tableView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            noWorkoutImageView.topAnchor.constraint(equalTo: workoutTodayLabel.bottomAnchor),
+            noWorkoutImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            noWorkoutImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            noWorkoutImageView.heightAnchor.constraint(equalTo: noWorkoutImageView.widthAnchor)
         ])
     }
 }
