@@ -37,11 +37,13 @@ class StatisticViewController: UIViewController {
         return segmentedControl
     }()
     
-    
+    private let nameTextField = BrownTextField()
     private let exerciesLabel = UILabel(text: "Exercises")
     private let tableView = StatisticsTableView()
     
     private var differenceArray = [DifferenceWorkout]()
+    private var filtredArray = [DifferenceWorkout]()
+    private var isFiltred = false
    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -61,6 +63,8 @@ class StatisticViewController: UIViewController {
         
         view.addSubview(statisticLabel)
         view.addSubview(segmentedControl)
+        nameTextField.brownDelegate = self
+        view.addSubview(nameTextField)
         view.addSubview(exerciesLabel)
         view.addSubview(tableView)
     }
@@ -111,6 +115,52 @@ class StatisticViewController: UIViewController {
             differenceArray.append(differenceWorkout)
         }
     }
+    
+    func filtringWorkouts(text: String) {
+        for workout in differenceArray {
+            if workout.name.lowercased().contains(text.lowercased()) {
+                filtredArray.append(workout)
+            }
+        }
+    }
+    
+}
+
+//MARK: - BrownTextFieldProtocol
+extension StatisticViewController: BrownTextFieldProtocol {
+    func typing(range: NSRange, replacementString: String) {
+        if let text = nameTextField.text,
+           let textRange = Range(range, in: text) {
+            let updateText = text.replacingCharacters(in: textRange, with: replacementString)
+            
+            filtredArray = [DifferenceWorkout]()
+            isFiltred = updateText.count > 0
+            filtringWorkouts(text: updateText)
+        }
+        
+        if isFiltred {
+            tableView.setDifferenceArray(filtredArray)
+        } else {
+            tableView.setDifferenceArray(differenceArray)
+        }
+        tableView.reloadData()
+    }
+    
+    func clear() {
+        isFiltred = false
+        differenceArray = [DifferenceWorkout]()
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            getDifferenceModel(dateStrat: Date().offsetDay(days: 7))
+            tableView.setDifferenceArray(differenceArray)
+            tableView.reloadData()
+        } else {
+            getDifferenceModel(dateStrat: Date().offsetDay(days: 30))
+            tableView.setDifferenceArray(differenceArray)
+            tableView.reloadData()
+        }
+        
+    }
 }
     
 //MARK: - Set Constraints
@@ -125,7 +175,12 @@ extension StatisticViewController {
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            exerciesLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10),
+            nameTextField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10),
+            nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            nameTextField.heightAnchor.constraint(equalToConstant: 38),
+            
+            exerciesLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 10),
             exerciesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             exerciesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20),
 
