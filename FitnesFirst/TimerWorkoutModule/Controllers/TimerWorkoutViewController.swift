@@ -36,9 +36,18 @@ class TimerWorkoutViewController: UIViewController {
     private lazy var finishButton = GreenButton(text: "FINISH")
     private let detailsLabel = UILabel(text: "Details")
     private let timerWorkoutParametersView = TimerWorkoutParametersView()
+    
+    private var workoutModel = WorkoutModel()
+    private var customAlert = CustomAlert()
+    private var shapeLayer = CAShapeLayer()
+    private var timer = Timer()
+    
+    private var durationTimer = 10
+    private var numberOfSet = 0
    
     override func viewDidLayoutSubviews() {
         closeButton.layer.cornerRadius = closeButton.frame.height / 2
+        animationCircular()
     }
     
     
@@ -47,6 +56,8 @@ class TimerWorkoutViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        addGesture()
+        setWorkoutParameters()
     }
     
     private func setupViews() {
@@ -57,6 +68,8 @@ class TimerWorkoutViewController: UIViewController {
         view.addSubview(ellipseImageView)
         view.addSubview(timerLabel)
         view.addSubview(detailsLabel)
+        timerWorkoutParametersView.cellNextTimerDeligate = self
+        timerWorkoutParametersView.refreshLabel(model: workoutModel, numberOfSet: numberOfSet)
         view.addSubview(timerWorkoutParametersView)
         view.addSubview(finishButton)
         finishButton.addTarget(self, action: #selector(finishButtonTapped), for: .touchUpInside)
@@ -64,11 +77,132 @@ class TimerWorkoutViewController: UIViewController {
     }
     
     @objc private func closeButtonTapped() {
+        timer.invalidate()
         dismiss(animated: true)
     }
     
     @objc private func finishButtonTapped() {
-        print("finish")
+        if numberOfSet == workoutModel.workoutSets {
+            RealmManager.shared.updateStatusWorkoutModel(workoutModel)
+            dismiss(animated: true)
+        } else {
+            presentAlertWithAction(title: "Warning", message: "You haven't finished your workout") {
+                self.dismiss(animated: true)
+            }
+        }
+    }
+    
+    func setWorkoutModel(_ model: WorkoutModel) {
+        workoutModel = model
+    }
+    
+    private func addGesture() {
+        let tapLabel = UITapGestureRecognizer(target: self, action: #selector(startTimer))
+        timerLabel.isUserInteractionEnabled = true
+        timerLabel.addGestureRecognizer(tapLabel)
+    }
+    
+    @objc private func startTimer() {
+        timerWorkoutParametersView.buttonsIsEnable(false)
+        
+        if numberOfSet == workoutModel.workoutSets {
+            presentSimpleAlert(title: "Error", message: "Finish your workout")
+        } else {
+            basicAnimation()
+            timer = Timer.scheduledTimer(timeInterval: 1,
+                                         target: self,
+                                         selector: #selector(timerAction),
+                                         userInfo: nil,
+                                         repeats: true)
+        }
+    }
+    
+    @objc private func timerAction() {
+        durationTimer -= 1
+        
+        if durationTimer == 0 {
+            timer.invalidate()
+            durationTimer = workoutModel.workoutTimer
+            
+            numberOfSet += 1
+            timerWorkoutParametersView.refreshLabel(model: workoutModel, numberOfSet: numberOfSet)
+            timerWorkoutParametersView.buttonsIsEnable(true)
+        }
+        
+        let (min, sec) = durationTimer.convertSeconds()
+        timerLabel.text = "\(min):\(sec.setZeroForSecond())"
+    }
+    
+    private func setWorkoutParameters() {
+        let (min, sec) = workoutModel.workoutTimer.convertSeconds()
+        timerLabel.text = "\(min):\(sec.setZeroForSecond())"
+        durationTimer = workoutModel.workoutTimer
+    }
+    
+}
+
+//MARK: - NextSetTimerProtocol
+extension TimerWorkoutViewController: NextSetTimerProtocol {
+    func nextSetTimerTapped() {
+        if numberOfSet < workoutModel.workoutSets {
+            numberOfSet += 1
+            timerWorkoutParametersView.refreshLabel(model: workoutModel, numberOfSet: numberOfSet)
+        } else {
+            presentSimpleAlert(title: "Error", message: "Finish your workout")
+        }
+    }
+    
+    func editingTimerTapped() {
+        customAlert.presentCustomAlert(viewController: self,
+                                       repsOrTimer: "Time of set") { [weak self] sets, timerOfSet in
+            guard let self else { return }
+            
+            if sets != "" && timerOfSet != "" {
+                guard let numberOfSets = Int(sets),
+                      let numberOfTimer = Int(timerOfSet) else { return }
+                RealmManager.shared.updateSetsTimerWorkoutModel(model: self.workoutModel,
+                                                                sets: numberOfSets,
+                                                                timer: numberOfTimer)
+                let (min, sec) = numberOfTimer.convertSeconds()
+                self.timerLabel.text = "\(min):\(sec.setZeroForSecond())"
+                self.durationTimer = numberOfTimer
+                self.timerWorkoutParametersView.refreshLabel(model: self.workoutModel, numberOfSet: self.numberOfSet)
+            }
+        }
+    }
+}
+
+
+//MARK: - Amination
+extension TimerWorkoutViewController {
+    
+    private func animationCircular() {
+        
+        let center = CGPoint(x: ellipseImageView.frame.width / 2,
+                             y: ellipseImageView.frame.width / 2)
+        
+        let endAngle = 3 * CGFloat.pi / 2
+        let startAngle = CGFloat.pi * 2 + endAngle
+        
+        let circularPath = UIBezierPath(arcCenter: center,
+                                        radius: 127,
+                                        startAngle: startAngle,
+                                        endAngle: endAngle,
+                                        clockwise: false)
+        
+        shapeLayer.path = circularPath.cgPath
+        shapeLayer.lineWidth = 21
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = UIColor.specialGreen.cgColor
+        shapeLayer.lineCap = .round
+        ellipseImageView.layer.addSublayer(shapeLayer)
+    }
+    
+    private func basicAnimation(){
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.toValue = 0
+        basicAnimation.duration = CFTimeInterval(durationTimer)
+        shapeLayer.add(basicAnimation, forKey: "basicAnimation")
     }
     
 }

@@ -152,21 +152,13 @@ extension MainViewController: WorkoutCellProtocol {
             present(repsWorkoutViewController, animated: true)
         } else {
         print("timer")
-//            let timerWorkoutViewController = TimerWorkoutViewController()
-//            timerWorkoutViewController.modalPresentationStyle = .fullScreen
-//            timerWorkoutViewController.setWorkoutModel(model)
-//            present(timerWorkoutViewController, animated: true)
+            let timerWorkoutViewController = TimerWorkoutViewController()
+            timerWorkoutViewController.modalPresentationStyle = .fullScreen
+            timerWorkoutViewController.setWorkoutModel(model)
+            present(timerWorkoutViewController, animated: true)
         }
     }
 }
-
-////MARK: - WorkoutCellProtocol
-//extension MainViewController: WorkoutCellProtocol {
-//    func startButtonTapped(model: WorkoutModel) {
-//        print(model)
-//    }
-//}
-
 //MARK: - Set Constraints
 extension MainViewController {
     
