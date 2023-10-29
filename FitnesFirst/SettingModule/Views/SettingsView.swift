@@ -10,16 +10,19 @@ import UIKit
 class SettingsView: UIView {
     
     private let firstNameLabel = UILabel(text: "First name")
-    private let firstNameTextField = BrownTextField()
+    let firstNameTextField = BrownTextField()
     
     private let secondNameLabel = UILabel(text: "Second name")
-    private let secondNameTextField = BrownTextField()
+     let secondNameTextField = BrownTextField()
     
     private let heightLabel = UILabel(text: "Height")
-    private let heightTextField = BrownTextField()
+     let heightTextField = BrownTextField()
     
     private let weightLabel = UILabel(text: "Weight")
-    private let weightTextField = BrownTextField()
+     let weightTextField = BrownTextField()
+    
+    private let targetLabel = UILabel(text: "Target")
+    let targetTextField = BrownTextField()
     
     
     private lazy var firstNameStackView = UIStackView(arrangedSubviews: [firstNameLabel, firstNameTextField],
@@ -34,13 +37,14 @@ class SettingsView: UIView {
     private lazy var weightStackView = UIStackView(arrangedSubviews: [weightLabel, weightTextField],
                                                    axis: .vertical,
                                                    spacing: 3)
-//    private lazy var targetStackView = UIStackView(arrangedSubviews: [targetLabel, targetTextField],
-//                                                   axis: .vertical,
-    //                                                   spacing: 3)
+    private lazy var targetStackView = UIStackView(arrangedSubviews: [targetLabel, targetTextField],
+                                                   axis: .vertical,
+                                                       spacing: 3)
     private lazy var generalStackView = UIStackView(arrangedSubviews: [firstNameStackView,
                                                                        secondNameStackView,
                                                                        heightStackView,
-                                                                       weightStackView],
+                                                                       weightStackView,
+                                                                      targetStackView],
                                                     axis: .vertical,
                                                     spacing: 20)
     
@@ -70,6 +74,7 @@ extension SettingsView {
             secondNameTextField.heightAnchor.constraint(equalToConstant: 40),
             heightTextField.heightAnchor.constraint(equalToConstant: 40),
             weightTextField.heightAnchor.constraint(equalToConstant: 40),
+            targetTextField.heightAnchor.constraint(equalToConstant: 40),
             
             generalStackView.topAnchor.constraint(equalTo: topAnchor),
             generalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),

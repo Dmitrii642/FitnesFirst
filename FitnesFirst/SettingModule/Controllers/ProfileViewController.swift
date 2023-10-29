@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct ResultWorkout {
+    let name: String
+    let result: Int
+    let imageData: Data?
+}
+
 class ProfileViewController: UIViewController {
     
     private let profileLabel = UILabel(text: "PROFILE",
@@ -18,7 +24,7 @@ class ProfileViewController: UIViewController {
         imageView.backgroundColor = #colorLiteral(red: 0.7607843137, green: 0.7607843137, blue: 0.7607843137, alpha: 1)
         imageView.layer.borderWidth = 5
         imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -93,10 +99,18 @@ class ProfileViewController: UIViewController {
     
     private let idProfileCollectionViewCell = "idProfileCollectionViewCell"
     
+    private var resultArray = [ResultWorkout]()
+    
     override func viewDidLayoutSubviews() {
         userPhotoImageView.layer.cornerRadius = userPhotoImageView.frame.height / 2
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
+        getResultWorkout()
+        setupUserParameters()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,19 +148,72 @@ class ProfileViewController: UIViewController {
         settingsViewController.modalPresentationStyle = .fullScreen
         present(settingsViewController, animated: true)
     }
+    
+    private func getWorkoutName() -> [String] {
+        var nameArray = [String]()
+        
+        let allWorkouts = RealmManager.shared.getResultWorkoutModel()
+        
+        for workoutModel in allWorkouts {
+            if !nameArray.contains(workoutModel.workoutName) {
+                nameArray.append(workoutModel.workoutName)
+            }
+        }
+        return nameArray
+    }
+    
+    private func getResultWorkout() {
+        let nameArray = getWorkoutName()
+        let workoutArray = RealmManager.shared.getResultWorkoutModel()
+        
+        for name in nameArray {
+            let predicate = NSPredicate(format: "workoutName = '\(name)'")
+            let filtredArray = workoutArray.filter(predicate).sorted(byKeyPath: "workoutName" )
+            var result = 0
+            var image: Data?
+            filtredArray.forEach { model in
+                result += model.workoutReps * model.workoutSets
+                image = model.workoutImage
+            }
+            let resultModel = ResultWorkout(name: name, result: result, imageData: image)
+            resultArray.append(resultModel)
+        }
+    }
+    
+    private func setupUserParameters() {
+        let userArray = RealmManager.shared.getResultUserModel()
+        
+        if !userArray.isEmpty {
+            userNameLabel.text = userArray[0].userFirstName + " " + userArray[0].userSecondName
+            userHeightLabel.text = "Height: \(userArray[0].userHeight)"
+            userWeightLabel.text = "Weight: \(userArray[0].userWeight)"
+            targetLabel.text = "TARGET: \(userArray[0].userTarget)"
+            workoutstargetlabel.text = "\(userArray[0].userTarget)"
+            
+            guard let data = userArray[0].userImage,
+                  let image = UIImage(data: data) else {
+                return
+            }
+            userPhotoImageView.image = image
+        }
+    }
 }
 
 //MARK: - UICollectionViewDataSource
 extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        resultArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idProfileCollectionViewCell,                                                  for: indexPath) as? ProfileCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .specialGreen
+        let model = resultArray[indexPath.row]
+        cell.configure(model: model)
+
+        let number = indexPath.row % 4
+        cell.backgroundColor = number == 0 || number == 3 ? .specialGreen : .specialDarkYellow
         return cell
     }
 }
