@@ -74,11 +74,16 @@ class MainViewController: UIViewController {
         setupUserParameters()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        showOnboarding()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         setConstraints()
+        getWeather()
     }
     
     private func setupViews() {
@@ -132,6 +137,38 @@ class MainViewController: UIViewController {
                 return
             }
             userPhotoImageView.image = image
+        }
+    }
+    
+    func getWeather() {
+        NetworkDataFetch.shared.fetchWeather { [weak self] result, error in
+            guard let self else { return }
+            if let model = result {
+                print(model)
+                self.weatherView.updateLabels(model: model)
+                NetworkImageRequest.shared.requestData(id: model.weather[0].icon) { result in
+                    switch result {
+                    case .success(let data):
+                        self.weatherView.updateImage(data: data)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            
+            if let error {
+                self.presentSimpleAlert(title: "Error", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func showOnboarding() {
+        let userDefaults = UserDefaults.standard
+        let onBoardingWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+        if onBoardingWasViewed == false {
+            let onboardingViewController = OnboardingViewController()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: true)
         }
     }
 }

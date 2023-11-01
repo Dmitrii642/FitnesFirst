@@ -70,7 +70,24 @@ class WeatherView : UIView {
         addSubview(weatherStatusLabel)
     }
     
-}
+    func updateImage(data: Data) {
+        guard let image = UIImage(data: data) else { return }
+        weatherImageView.image = image
+    }
+    
+    func updateLabels(model: WeatherModel) {
+        weatherStatusLabel.text = model.weather[0].myDescription + " " + "\(model.main.temperatureСelsius)°C"
+        
+        switch model.weather[0].weatherDescription {
+            case "clear sky":
+                weatherDiscriptionLabel.text = "Хорошая погода, чтобы позаниматься на улице"
+            case "shower rain", "rain", "thunderstorm":
+                weatherDiscriptionLabel.text = "Лучше остаться дома и провести домашнюю тренировку"
+            default:
+            weatherDiscriptionLabel.text = "Можно собираться в зал"
+            }
+        }
+    }
 
 //MARK: - Set Constraints
 extension WeatherView{
