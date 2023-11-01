@@ -14,6 +14,13 @@
 		660422A02AAE232000FA3082 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604229F2AAE232000FA3082 /* CalendarView.swift */; };
 		660422A22AAF514A00FA3082 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660422A12AAF514A00FA3082 /* WeatherView.swift */; };
 		6610E12E2AED3C0F000BB304 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E12D2AED3C0F000BB304 /* UserModel.swift */; };
+		6610E1302AF242E2000BB304 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E12F2AF242E2000BB304 /* Notifications.swift */; };
+		6610E1322AF26857000BB304 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E1312AF26857000BB304 /* WeatherModel.swift */; };
+		6610E1352AF26BAF000BB304 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E1342AF26BAF000BB304 /* NetworkRequest.swift */; };
+		6610E1372AF27080000BB304 /* NetworkDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E1362AF2707F000BB304 /* NetworkDataFetch.swift */; };
+		6610E1392AF287EC000BB304 /* NetworkImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E1382AF287EC000BB304 /* NetworkImageRequest.swift */; };
+		6610E13E2AF29581000BB304 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E13D2AF29581000BB304 /* OnboardingCollectionViewCell.swift */; };
+		6610E1402AF2966F000BB304 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610E13F2AF2966F000BB304 /* OnboardingViewController.swift */; };
 		664351E52AB0A4BF00F34132 /* UIView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664351E42AB0A4BF00F34132 /* UIView + Extensions.swift */; };
 		664351E92AB0AAF500F34132 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664351E72AB0AAF500F34132 /* Roboto-Medium.ttf */; };
 		664351EA2AB0AAF500F34132 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664351E82AB0AAF500F34132 /* Roboto-Bold.ttf */; };
@@ -68,6 +75,13 @@
 		6604229F2AAE232000FA3082 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		660422A12AAF514A00FA3082 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		6610E12D2AED3C0F000BB304 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		6610E12F2AF242E2000BB304 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		6610E1312AF26857000BB304 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		6610E1342AF26BAF000BB304 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		6610E1362AF2707F000BB304 /* NetworkDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetch.swift; sourceTree = "<group>"; };
+		6610E1382AF287EC000BB304 /* NetworkImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageRequest.swift; sourceTree = "<group>"; };
+		6610E13D2AF29581000BB304 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		6610E13F2AF2966F000BB304 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		664351E42AB0A4BF00F34132 /* UIView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extensions.swift"; sourceTree = "<group>"; };
 		664351E72AB0AAF500F34132 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		664351E82AB0AAF500F34132 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -144,12 +158,14 @@
 			isa = PBXGroup;
 			children = (
 				660422992AAE0C3900FA3082 /* Application */,
+				6610E13A2AF292CB000BB304 /* OnBoardingModule */,
 				66A022092AB8AB05002E854A /* NavigationModule */,
 				6604229B2AAE0D1500FA3082 /* MainModule */,
 				66A0220C2AB9C155002E854A /* NewWorkoutModule */,
 				66A739152ACAF80B00A04304 /* RepsWorkoutModule */,
 				66A739162ACAF82300A04304 /* TimerWorkoutModule */,
 				66A7392E2AD1738700A04304 /* SettingModule */,
+				6610E1332AF26AE1000BB304 /* Network */,
 				66A0222C2ABC9858002E854A /* Service */,
 				66A021FA2AB72902002E854A /* StatisticModule */,
 				66A021FC2AB7293D002E854A /* Controllers */,
@@ -163,6 +179,7 @@
 			children = (
 				660422872AACA28F00FA3082 /* SceneDelegate.swift */,
 				660422852AACA28F00FA3082 /* AppDelegate.swift */,
+				6610E12F2AF242E2000BB304 /* Notifications.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -192,6 +209,7 @@
 			children = (
 				66A022282ABC8A54002E854A /* WorkoutModel.swift */,
 				6610E12D2AED3C0F000BB304 /* UserModel.swift */,
+				6610E1312AF26857000BB304 /* WeatherModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +251,41 @@
 				665269B42AD804CA00357F9C /* ProfileCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		6610E1332AF26AE1000BB304 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6610E1342AF26BAF000BB304 /* NetworkRequest.swift */,
+				6610E1362AF2707F000BB304 /* NetworkDataFetch.swift */,
+				6610E1382AF287EC000BB304 /* NetworkImageRequest.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		6610E13A2AF292CB000BB304 /* OnBoardingModule */ = {
+			isa = PBXGroup;
+			children = (
+				6610E13C2AF292F7000BB304 /* Views */,
+				6610E13B2AF292ED000BB304 /* Controllers */,
+			);
+			path = OnBoardingModule;
+			sourceTree = "<group>";
+		};
+		6610E13B2AF292ED000BB304 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6610E13F2AF2966F000BB304 /* OnboardingViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6610E13C2AF292F7000BB304 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6610E13D2AF29581000BB304 /* OnboardingCollectionViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		664351E32AB0A49C00F34132 /* UIKit */ = {
@@ -562,14 +615,19 @@
 				66A021EA2AB0B960002E854A /* UIColor + Extensions.swift in Sources */,
 				66A739322AD173D900A04304 /* SettingsViewController.swift in Sources */,
 				66A021F12AB0C166002E854A /* CalendarCollectionViewCell.swift in Sources */,
+				6610E1392AF287EC000BB304 /* NetworkImageRequest.swift in Sources */,
 				66A022132AB9C56F002E854A /* CloseButton.swift in Sources */,
 				66A739142AC5C8B900A04304 /* DifferenceWorkout.swift in Sources */,
 				66A021F52AB35980002E854A /* MainTableView.swift in Sources */,
 				66A021EE2AB0BF0C002E854A /* CalendarCollectionView.swift in Sources */,
+				6610E1302AF242E2000BB304 /* Notifications.swift in Sources */,
+				6610E1372AF27080000BB304 /* NetworkDataFetch.swift in Sources */,
 				66A739112AC4841000A04304 /* UIStackView + Extensions.swift in Sources */,
 				66A022012AB73DEC002E854A /* StaticticsTableViewCell.swift in Sources */,
 				66A022272ABC8214002E854A /* Int + Extensions.swift in Sources */,
 				66A739262ACD9C4D00A04304 /* TimerWorkoutParametersView.swift in Sources */,
+				6610E1402AF2966F000BB304 /* OnboardingViewController.swift in Sources */,
+				6610E13E2AF29581000BB304 /* OnboardingCollectionViewCell.swift in Sources */,
 				66A021F72AB35B6B002E854A /* WorkoutTableViewCell.swift in Sources */,
 				66A7391E2ACB156600A04304 /* customAlert.swift in Sources */,
 				66A022172AB9D363002E854A /* BrownTextField.swift in Sources */,
@@ -577,6 +635,8 @@
 				66A021EC2AB0BBA5002E854A /* UIFont + Extensions.swift in Sources */,
 				660422A02AAE232000FA3082 /* CalendarView.swift in Sources */,
 				664351E52AB0A4BF00F34132 /* UIView + Extensions.swift in Sources */,
+				6610E1352AF26BAF000BB304 /* NetworkRequest.swift in Sources */,
+				6610E1322AF26857000BB304 /* WeatherModel.swift in Sources */,
 				665269B72AD805ED00357F9C /* ProfileViewController.swift in Sources */,
 				66A022222ABB44BE002E854A /* GreenButton.swift in Sources */,
 				660422882AACA28F00FA3082 /* SceneDelegate.swift in Sources */,
