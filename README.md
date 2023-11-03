@@ -4,7 +4,7 @@ Stack:
 - Launch Screen
 
 - Elements of UIKit
-((label, button, segmented control, Switch, Slider, UIView, UIImageView)
+  (label, button, segmented control, Switch, Slider, UIView, UIImageView)
 - TableView (+ creating customTableViewCell)
 - Collection View (+ creating customCollectionViewCell)
 - TabBarController (+ Navigation Bar)
