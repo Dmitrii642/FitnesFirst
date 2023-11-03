@@ -1,15 +1,13 @@
 # FitnesFirst
+Stack:
+- OnBoarding
+- Launch Screen
 
-OnBoarding
-- - Launch Screen
-
-- Code markup (+ work in storyboard)
-
-- Basic elements of UIKit
+- Elements of UIKit
 ((label, button, segmented control, Switch, Slider, UIView, UIImageView)
 - TableView (+ creating customTableViewCell)
-- - Collection View (+ creating customCollectionViewCell)
-- - TabBarController (+ Navigation Bar)
+- Collection View (+ creating customCollectionViewCell)
+- TabBarController (+ Navigation Bar)
 - ScrollView
 - AlertController (+custom alert)
 - DatePicker
